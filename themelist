@@ -1,0 +1,10 @@
+local theme = {}
+    LightTheme,
+    DarkTheme,
+    GrapeTheme,
+    BloodTheme,
+    Ocean,
+    Midnight,
+    Sentinel,
+    Synapse
+return theme
