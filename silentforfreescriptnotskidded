@@ -1,0 +1,65 @@
+    local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefanuk12/Aiming/main/Load.lua"))()("Module")
+Aiming.ShowCredits = false 
+
+                Notify({
+                    Title = "DxH - Premium",
+                    Description = "Silent Aim Loaded, thanks Stefanuk12 for modulev2 ( With license )",
+                    Duration = 5
+                })
+
+-- // Services
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Stats = game:GetService("Stats")
+local RunService = game:GetService("RunService")
+
+-- // Vars
+local MainEvent = ReplicatedStorage.MainEvent
+local AimingSelected = Aiming.Selected
+local AimingChecks = Aiming.Checks
+local DataPing = Stats.Network.ServerStatsItem["Data Ping"]
+
+-- // Workout the prediction stuff
+local PredictionBase = 0.300
+local CurrentPredictionValue = 0
+
+RunService.Heartbeat:Connect(function()
+    -- // Workout the prediction value
+    local Ping = tostring(DataPing:GetValueString()):split(" ")[1]
+    CurrentPredictionValue = (Ping / 1000 + PredictionBase)
+end)
+
+-- // Apply the prediction
+local function ApplyPredictionFormula(SelectedPart)
+    -- // Workout the predicted place
+    local Predicted = SelectedPart.CFrame + (SelectedPart.Velocity * CurrentPredictionValue)
+
+    -- // Return it
+    return Predicted
+end
+
+-- // So it works when not obfuscating
+LPH_JIT_ULTRA = LPH_JIT_ULTRA or function(...)
+    return ...
+end
+
+-- //
+local __namecall
+__namecall = hookmetamethod(game, "__namecall", LPH_JIT_ULTRA(function(...)
+    -- // Vars
+    local args = {...}
+    local self = args[1]
+    local method = getnamecallmethod()
+
+    -- // Make sure aiming is enabled, and the game is trying to send the mouse pos to server
+    if (method == "FireServer" and self == MainEvent and args[2] == "UpdateMousePos" and AimingChecks.IsAvailable()) then
+        -- // Spoof mouse pos
+        local Hit = ApplyPredictionFormula(AimingSelected.Part)
+        args[3] = Hit.Position
+
+        -- // Return spoofed args
+        return __namecall(unpack(args))
+    end
+
+    -- // Return
+    return __namecall(...)
+end))
