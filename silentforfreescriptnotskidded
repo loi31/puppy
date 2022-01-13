@@ -1,4 +1,7 @@
-    local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefanuk12/Aiming/main/Load.lua"))()("Module")
+local NotifyLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/dwa31/puppy/main/AkaliNotif.lua"))()
+local Notify = NotifyLibrary.Notify
+
+local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefanuk12/Aiming/main/Load.lua"))()("Module")
 Aiming.ShowCredits = false 
 
                 Notify({
