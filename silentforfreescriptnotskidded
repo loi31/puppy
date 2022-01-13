@@ -5,8 +5,8 @@ local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefan
 Aiming.ShowCredits = false 
 
                 Notify({
-                    Title = "DxH - Premium",
-                    Description = "Silent Aim Loaded, thanks Stefanuk12 for modulev2 ( With license )",
+                    Title = "| Fazeware |",
+                    Description = "Silent Aim Loaded, thanks loi#2289 for script",
                     Duration = 5
                 })
 
